@@ -54,15 +54,33 @@ public class MenuGui extends Application{
             textBox.setText(currentDateTime.format(formatter));
         });
 
-        // add event
-        /*
-        file.setOnAction(event);
-        color.setOnAction(event);
-        exit.setOnAction(event); */
-     
-      
+        // OPTION 2 - Save text to log.txt
+        file.setOnAction(event -> {
+
+            try {
+                FileWriter writer = new FileWriter("log.txt");
+
+                writer.write(textBox.getText());
+                writer.close();
+                textBox.appendText("\nSaved to log.txt");
+
+            } catch (IOException exception) {
+                textBox.appendText( "\nError writing file." );
+            }
+        });
+
+        // OPTION 3 - Change background color
+        color.setOnAction(event -> {
+          pane.setStyle("-fx-background-color: rgb(0, 167, 0);");
+          color.setText(String.format("Green"));
+        });
+
+        // OPTION 4 - Exit program
+        exit.setOnAction(event -> {
+            Platform.exit();
+        });
         
-       // Create scene
+      // Create scene
       Scene scene = new Scene(pane, 600, 400);
 
       primaryStage.setScene(scene);
