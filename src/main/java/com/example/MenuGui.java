@@ -1,11 +1,15 @@
+package com.example;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.paint.Color;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuItem;
+import java.io.FileWriter;
+import java.io.IOException;
+import javafx.scene.control.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import javafx.application.Platform;
+import javafx.geometry.Pos;
 
 public class MenuGui extends Application{
   @Override
@@ -15,8 +19,10 @@ public class MenuGui extends Application{
       // Main layout
       BorderPane pane = new BorderPane();
       // Text box
-      TextArea textBox = new TextArea();
+      TextField textBox = new TextField();
       textBox.setPromptText("Menu results."); 
+      textBox.setMaxWidth(300);
+      textBox.setAlignment(Pos.CENTER);
       // create a menu
       Menu menu = new Menu("Menu");
 
@@ -41,8 +47,6 @@ public class MenuGui extends Application{
         
       // Put text box in the center
       pane.setCenter(textBox);
-
-      Color greenHue = Color.rgb(0, 167, 0);
         // create events for menu items
         // action event
         //Display date and time
@@ -56,8 +60,7 @@ public class MenuGui extends Application{
 
         // OPTION 2 - Save text to log.txt
         file.setOnAction(event -> {
-
-            try {
+          try {
                 FileWriter writer = new FileWriter("log.txt");
 
                 writer.write(textBox.getText());
@@ -65,14 +68,19 @@ public class MenuGui extends Application{
                 textBox.appendText("\nSaved to log.txt");
 
             } catch (IOException exception) {
-                textBox.appendText( "\nError writing file." );
+                textBox.appendText("\nError writing file.");
             }
         });
 
         // OPTION 3 - Change background color
         color.setOnAction(event -> {
-          pane.setStyle("-fx-background-color: rgb(0, 167, 0);");
-          color.setText(String.format("Green"));
+          //Color
+          int green = 100 + (int)(Math.random() * 156);
+          String hexColor = String.format(
+        "#%02X%02X%02X", 0, green, 0);
+          
+          pane.setStyle("-fx-background-color: " + hexColor + ";");
+          color.setText("Green: " + hexColor);
         });
 
         // OPTION 4 - Exit program
