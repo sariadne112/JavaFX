@@ -22,7 +22,9 @@ public class MenuGui extends Application{
       TextField textBox = new TextField();
       textBox.setPromptText("Menu results."); 
       textBox.setMaxWidth(300);
+      textBox.setMaxHeight(200);
       textBox.setAlignment(Pos.CENTER);
+      textBox.setEditable(false);
       // create a menu
       Menu menu = new Menu("Menu");
 
@@ -51,11 +53,10 @@ public class MenuGui extends Application{
         // action event
         //Display date and time
       date.setOnAction(event -> {
-            LocalDateTime currentDateTime = LocalDateTime.now();
-
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm:ss");
-
-            textBox.setText(currentDateTime.format(formatter));
+        textBox.clear();
+        LocalDateTime currentDateTime = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm:ss");
+        textBox.setText(currentDateTime.format(formatter));
         });
 
         // OPTION 2 - Save text to log.txt
@@ -65,10 +66,12 @@ public class MenuGui extends Application{
 
                 writer.write(textBox.getText());
                 writer.close();
+                textBox.clear();
                 textBox.appendText("\nSaved to log.txt");
 
             } catch (IOException exception) {
-                textBox.appendText("\nError writing file.");
+              textBox.clear();
+              textBox.appendText("\nError writing file.");
             }
         });
 
