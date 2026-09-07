@@ -84,6 +84,7 @@ public class MenuGui extends Application{
           
           pane.setStyle("-fx-background-color: " + hexColor + ";");
           color.setText("Green: " + hexColor);
+           textBox.setText("Background changed to " + hexColor);
         });
 
         // OPTION 4 - Exit program
